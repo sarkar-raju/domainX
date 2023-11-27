@@ -16,7 +16,7 @@ const Cta = () => {
               Day-30
             </h1>
             <h2 className="text-center pt-4 font-bold text-[18px]">Never lose your domain again</h2>
-            <p className="text-center px-8 pt-9 text-slate-500">Your domain will be automatically renewed on time - except those you don't want anymore</p>
+            <p className="text-center px-8 pt-9 text-slate-500">Your domain will be automatically renewed on time - except those you do not want anymore</p>
           </div>
         </div>
         <div className="child3 mt-[15%]">
