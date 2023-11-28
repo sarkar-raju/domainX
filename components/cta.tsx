@@ -2,7 +2,7 @@ import React from "react";
 
 const Cta = () => {
   return (
-    <div className="mother-div bg-slate-200 h-[100vh] w-[100vw] mt-[266px]">
+    <div className="mother-div bg-slate-200 h-[100vh] w-[100vw] mt-[230px]">
       <div className="child1 flex gap-[180px]">
         <div className="child2">
           <div className="w-[350px] h-[500px] bg-white mt-[-30px] ml-[500px] shadow-xl">
