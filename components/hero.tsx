@@ -6,7 +6,7 @@ const Hero = () => {
     <div>
       <div>
         <div>
-          <h1 className="text-[250px] font-bold">
+          <h1 className="sm:text-[250px] text-[130px] font-bold">
             <span
             className="text-green-400"
             >H</span>

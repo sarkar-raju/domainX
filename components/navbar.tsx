@@ -1,59 +1,81 @@
+"use client";
+
+import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import { useRef } from "react";
+
+import React from "react";
 import {
-  Navbar as NextUINavbar,
-  NavbarContent,
-  NavbarMenu,
-  NavbarMenuToggle,
+  Navbar,
   NavbarBrand,
-  NavbarItem,
+  NavbarMenuToggle,
   NavbarMenuItem,
-} from "@nextui-org/navbar";
-import { Button } from "@nextui-org/button";
-import { Kbd } from "@nextui-org/kbd";
-import { Link } from "@nextui-org/link";
-import { Input } from "@nextui-org/input";
+  NavbarMenu,
+  NavbarContent,
+  NavbarItem,
+  Link,
+  Button,
+} from "@nextui-org/react";
 
-import { link as linkStyles } from "@nextui-org/theme";
-
-import { siteConfig } from "@/config/site";
 import NextLink from "next/link";
 import clsx from "clsx";
 
-import {
-  TwitterIcon,
-  GithubIcon,
-  DiscordIcon,
-  HeartFilledIcon,
-  SearchIcon,
-} from "@/components/icons";
-
-import { Logo } from "@/components/icons";
-
 import Image from "next/image";
 
-export const Navbar = () => {
+import { siteConfig } from "@/config/site";
+import { ThemeSwitch } from "@/components/theme-switch";
+
+export const NavbarCmp = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean | undefined>(false);
+  const pathname = usePathname();
+  const ref = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      setIsMenuOpen(false);
+    }
+  }, [pathname]);
+
   return (
-    <NextUINavbar maxWidth="xl" position="sticky">
-      <NavbarContent className="basis-1/5 sm:basis-full" justify="start">
-        <NavbarBrand as="li" className="gap-3 max-w-fit">
-          <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Image 
-            src="/logo.png"
-            width={100}
-            height={100}
-            alt="logo"
-            />
+    <Navbar
+      isBordered
+      ref={ref}
+      className={clsx({
+        "z-[100001]": isMenuOpen,
+      })}
+      isMenuOpen={isMenuOpen}
+     
+      onMenuOpenChange={setIsMenuOpen}
+    >
+      <NavbarContent className="sm:hidden" justify="center">
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        />
+      </NavbarContent>
+
+      <NavbarContent className="sm:hidden pr-3" justify="center">
+        <NavbarBrand>
+          <NextLink href="/">
+            <Image src="/logo.png" width={68} height={10} alt="logo" />
           </NextLink>
         </NavbarBrand>
-        <ul className="hidden lg:flex gap-4 justify-start ml-2">
+      </NavbarContent>
+
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <NavbarBrand>
+          <NextLink href="/">
+            <Image src="/logo.png" width={68} height={10} alt="logo" />
+          </NextLink>
+        </NavbarBrand>
+        <ul className="sm:flex gap-4 justify-start ml-2">
           {siteConfig.navItems.map((item) => (
             <NavbarItem key={item.href}>
               <NextLink
-                className={clsx(
-                  linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium"
-                )}
+             
+                
                 color="foreground"
-                href={item.href}
+                href="#"
               >
                 {item.label}
               </NextLink>
@@ -62,15 +84,21 @@ export const Navbar = () => {
         </ul>
       </NavbarContent>
 
-      <NavbarContent
-        className="hidden sm:flex basis-1/5 sm:basis-full"
-        justify="end"
-      >
-        <NavbarItem className="hidden md:flex gap-4">
-          <Button className="rounded-full border-solid border-1 border-slate-300 bg-white font-bold hover:bg-blue-100">
-            Get started
+      <NavbarContent justify="end" >
+      
+        <NavbarItem>
+          <Button
+            className="bg-blue-500 text-white font-bold rounded-full text-[15px] mr-3"
+            as={Link}
+            href="/contact"
+          >
+            Get Started
           </Button>
-          <Button className="rounded-full hover:font-bold transition ease-in-out hover:scale-200 hover:bg-blue-100">
+          <Button
+            className="bg-slate-100 text-black font-bold rounded-full text-[15px] hover:bg-yellow-50"
+            as={Link}
+            href="/contact"
+          >
             Login
           </Button>
         </NavbarItem>
@@ -80,13 +108,17 @@ export const Navbar = () => {
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>
-              <NextLink color="foreground" href={item.href}>
+              <Link
+              color="foreground"
+                
+                href="#"
+              >
                 {item.label}
-              </NextLink>
+              </Link>
             </NavbarMenuItem>
           ))}
         </div>
       </NavbarMenu>
-    </NextUINavbar>
+    </Navbar>
   );
 };
